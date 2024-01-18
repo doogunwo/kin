@@ -1,8 +1,6 @@
 {
   "name": "kin-app",
-  "main": "./public/electron.js",
   "version": "0.1.0",
-  "homepage": "./",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
@@ -19,7 +17,6 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "electron": "electron .",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

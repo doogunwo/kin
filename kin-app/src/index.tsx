@@ -1,9 +1,11 @@
-// src/index.js
+// src/index.tsx
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './App';
 
-const App = () => {
-  return <h1>Hello World!</h1>;
-};
-
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <React.StrictMode>
+    <App message="Hello TypeScript React!" />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
