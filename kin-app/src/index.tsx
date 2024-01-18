@@ -1,11 +1,11 @@
-// src/index.tsx
+// ./index.tsx
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import SignInSide from './Material/SignInSide'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App message="Hello TypeScript React!" />
+    <SignInSide />
   </React.StrictMode>,
   document.getElementById('root')
 );
