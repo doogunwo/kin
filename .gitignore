@@ -179,3 +179,5 @@ dist
 .html
 .css
 Makefile
+network/config/*
+network/organizations/*
