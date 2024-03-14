@@ -10,7 +10,9 @@ rm -rf organizations/ordererOrganizations
 rm -rf organizations/peerOrganizations
 
 # 디렉토리 구성
-mkdir config
+if [ ! -d config ]; then
+    mkdir config
+fi
 
 # identity 생성
 cryptogen generate --config=./crypto-config.yaml --output="organizations"
