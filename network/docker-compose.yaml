@@ -1,8 +1,10 @@
+# 버전
 version: '2.1'
+
 # 네트워크 정의
 networks:
   basic:
-    name: kin_network
+    name: kin
 
 # 컨테이너서비스정의
 services:
@@ -24,42 +26,25 @@ services:
     container_name: ca_org1
     networks:
       - basic
-  #CA_ORG2
+
   ca_org2:
     image: hyperledger/fabric-ca:latest
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca-org2
-      - FABRIC_CA_SERVER_TLS_ENABLED=false
-      - FABRIC_CA_SERVER_PORT=9055
-      - FABRIC_CA_SERVER_OPERATIONS_LISTENADDRESS=0.0.0.0:19055
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_PORT=8054
+      - FABRIC_CA_SERVER_OPERATIONS_LISTENADDRESS=0.0.0.0:18054
     ports:
-      - "9055:9055"
-      - "19055:19055"
-    command: sh -c 'fabric-ca-server start -b admin:password#2 -d'
+      - "8054:8054"
+      - "18054:18054"
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
-      - ./organizations/peerOrganizations/org2.example.com/ca:/etc/hyperledger/fabric-ca-server
+      - ../organizations/fabric-ca/org2:/etc/hyperledger/fabric-ca-server
     container_name: ca_org2
     networks:
       - basic
-  #CA ORDERER
-  ca_orderer:
-    image: hyperledger/fabric-ca:latest
-    environment:
-      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=ca-orderer
-      - FABRIC_CA_SERVER_TLS_ENABLED=true
-      - FABRIC_CA_SERVER_PORT=9054
-      - FABRIC_CA_SERVER_OPERATIONS_LISTENADDRESS=0.0.0.0:19054
-    ports:
-      - "9054:9054"
-      - "19054:19054"
-    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
-    volumes:
-      - ./organizations/fabric-ca/ordererOrg:/etc/hyperledger/fabric-ca-server
-    container_name: ca_orderer
-    networks:
-      - basic
+
 # ORDERER 정의
   orderer.example.com:
     container_name: orderer.example.com
@@ -94,6 +79,7 @@ services:
       - 9443:9443
     networks:
       - basic
+
 # PEER_ORG1
   peer0.org1.example.com:
     container_name: peer0.org1.example.com
@@ -130,7 +116,26 @@ services:
       - 9444:9444
     networks:
       - basic
-# PEER_ORG@
+
+# CA_ORDERER
+  ca_orderer:
+    image: hyperledger/fabric-ca:latest
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-orderer
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_PORT=9054
+      - FABRIC_CA_SERVER_OPERATIONS_LISTENADDRESS=0.0.0.0:19054
+    ports:
+      - "9054:9054"
+      - "19054:19054"
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+    volumes:
+      - ../organizations/fabric-ca/ordererOrg:/etc/hyperledger/fabric-ca-server
+    container_name: ca_orderer
+    networks:
+      - basic
+# PEER_ORG2
   peer0.org2.example.com:
     container_name: peer0.org2.example.com
     image: hyperledger/fabric-peer:latest

@@ -1,17 +1,17 @@
 #!/bin/bash
 
-# ca동작
 docker-compose up -d ca_org1 ca_org2 ca_orderer
-sleep 3
 
-#identity 생성
-./orgranizations/registerEnroll.sh
+sleep 5
+
+# identity를 생성
+. organizations/fabric_ca/registerEnroll.sh
 
 createOrg1
 createOrg2
 createOrderer
 
-# genesis block , tx 생성
+# 제네시스블록, 채널트랜젝션 생성
 ./generate.sh
 
 # 연결정보 생성
