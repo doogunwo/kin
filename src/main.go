@@ -1,3 +1,9 @@
+/*
+Copyright 2020 IBM All Rights Reserved.
+
+SPDX-License-Identifier: Apache-2.0
+*/
+
 package main
 
 import (
@@ -15,7 +21,7 @@ func main() {
 	os.Setenv("DISCOVERY_AS_LOCALHOST", "true")
 	wallet, err := gateway.NewFileSystemWallet("wallet")
 	if err != nil {
-		fmt.Printf("Failed to create wallet : %s\n", err)
+		fmt.Printf("Failed to create wallet: %s\n", err)
 		os.Exit(1)
 	}
 
@@ -29,7 +35,6 @@ func main() {
 
 	ccpPath := filepath.Join(
 		"..",
-		"..",
 		"test-network",
 		"organizations",
 		"peerOrganizations",
@@ -42,18 +47,20 @@ func main() {
 		gateway.WithIdentity(wallet, "appUser"),
 	)
 	if err != nil {
-		fmt.Printf("Failed to connect to gateway: %s\n", err) // 여기서 오류 발생 지금
+		fmt.Printf("Failed to connect to gateway: %s\n", err)
 		os.Exit(1)
 	}
 	defer gw.Close()
 
 	network, err := gw.GetNetwork("mychannel")
+	
 	if err != nil {
 		fmt.Printf("Failed to get network: %s\n", err)
 		os.Exit(1)
 	}
-	
+
 	contract := network.GetContract("fabcar")
+
 	result, err := contract.EvaluateTransaction("queryAllCars")
 	if err != nil {
 		fmt.Printf("Failed to evaluate transaction: %s\n", err)
@@ -93,7 +100,7 @@ func populateWallet(wallet *gateway.Wallet) error {
 	credPath := filepath.Join(
 		"..",
 		"..",
-		"network",
+		"test-network",
 		"organizations",
 		"peerOrganizations",
 		"org1.example.com",
@@ -102,7 +109,7 @@ func populateWallet(wallet *gateway.Wallet) error {
 		"msp",
 	)
 
-	certPath := filepath.Join(credPath, "signcerts", "User1@org1.example.com-cert.pem")
+	certPath := filepath.Join(credPath, "signcerts", "cert.pem")
 	// read the certificate pem
 	cert, err := ioutil.ReadFile(filepath.Clean(certPath))
 	if err != nil {
