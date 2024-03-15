@@ -5,11 +5,9 @@ docker-compose up -d ca_org1 ca_org2 ca_orderer
 sleep 5
 
 # identity를 생성
-. organizations/fabric_ca/registerEnroll.sh
-
-createOrg1
-createOrg2
-createOrderer
+pushd
+./organizations/fabric_ca/registerEnroll.sh
+popd
 
 # 제네시스블록, 채널트랜젝션 생성
 ./generate.sh

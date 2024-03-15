@@ -12,7 +12,7 @@ if [ ! -d config ]; then
 fi
 
 # identity 생성
-sudo ../bin/cryptogen generate --config=./crypto-config.yaml --output="organizations"
+sudo ../bin/cryptogen generate --config=./crypto-config.yaml --output="./organizations"
 
 # 제네시스블록 생성
 sudo ../bin/configtxgen -profile TwoOrgsOrdererGenesis -channelID system-channel -outputBlock ./config/genesis.block
